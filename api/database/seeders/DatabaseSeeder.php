@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => 'Рама',
                 'description' => 'Производство',
-                'price' => 800,
+                'price' => 500,
                 'url1' => 'https://test.com',                
             ],
                         
