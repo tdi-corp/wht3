@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 class DatabaseSeeder extends Seeder
 {
@@ -22,6 +23,13 @@ class DatabaseSeeder extends Seeder
                 'price' => 800,
                 'url1' => 'https://test.com',                
             ],
+            [
+                'name' => 'Рама',
+                'description' => 'Производство',
+                'price' => 800,
+                'url1' => 'https://test.com',                
+            ],
+                        
         ];
         
 
@@ -31,6 +39,8 @@ class DatabaseSeeder extends Seeder
                 'description' => $post['description'],
                 'price' => $post['price'],
                 'url1' => $post['url1'],
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ]);
 
         }
