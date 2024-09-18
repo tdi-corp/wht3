@@ -5,6 +5,7 @@
 ## Technology
 - PHP-FPM 8.3
 - Laravel 11
+- Mysql 8
 - Node 20.16
 - Vue, Vuex
 - Docker & Docker Compose
