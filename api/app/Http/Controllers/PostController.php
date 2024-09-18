@@ -10,9 +10,29 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $sort = ['asc', 'desc'];
+
+        $price = $request->price ?? 'asc'; // asc || desc
+        $created_at = $request->created_at ?? null; // asc || desc
+
+
         $posts = Post::paginate(10);
+
+        if(in_array($request->created_at, $sort)) {
+            $posts->setCollection(
+                $request->created_at === 'desc' ? $posts->sortByDesc('created_at') : $posts->sortBy('created_at')
+            );
+        }
+
+        if(in_array($request->price, $sort)) {
+            $posts->setCollection(
+                $request->price === 'desc' ? $posts->sortByDesc('price') : $posts->sortBy('price')
+            );
+        }        
+
+        // $posts = Post::orderBy('id', 'desc')->paginate(10)->withQueryString();
 
         return response()
             ->json([
