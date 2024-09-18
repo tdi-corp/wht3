@@ -20,6 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->render(function (NotFoundHttpException $e, Request $request) {
             if ($request->is('api/*')) {
                 return response()->json([
+                    'ok' => false,
                     'message' => 'Record not found.'
                 ], 404);
             }
