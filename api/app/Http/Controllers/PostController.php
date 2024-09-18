@@ -20,25 +20,46 @@ class PostController extends Controller
 
         $posts = Post::paginate(10);
 
+        $postsCollection = $posts->getCollection();
+
+        $arraySort = [];
         if(in_array($request->created_at, $sort)) {
-            $posts->setCollection(
-                $request->created_at === 'desc' ? $posts->sortByDesc('created_at') : $posts->sortBy('created_at')
-            );
+            array_push($arraySort, ['created_at', $request->created_at]);
         }
 
         if(in_array($request->price, $sort)) {
-            $posts->setCollection(
-                $request->price === 'desc' ? $posts->sortByDesc('price') : $posts->sortBy('price')
-            );
-        }        
+            array_push($arraySort, ['price', $request->price]);
+        }
 
-        // $posts = Post::orderBy('id', 'desc')->paginate(10)->withQueryString();
+        if(count($arraySort) > 0) {
+            $postsCollection = $postsCollection->sortBy($arraySort);
+            $postsCollection = $postsCollection->values()->all();     
+        }
+
+        $postsCollection = collect($postsCollection)->map(function ($item, int $key) {
+            return $item->only(['id', 'name', 'url1', 'price']);
+        });
+
+        $posts = $posts->setCollection($postsCollection);
+
 
         return response()
             ->json([
                 'data' => $posts,
                 'ok' => true,
             ]);
+
+        // if(in_array($request->created_at, $sort)) {
+        //     $posts->setCollection(
+        //         $request->created_at === 'desc' ? $posts->sortByDesc('created_at') : $posts->sortBy('created_at')
+        //     );
+        // }
+
+        // if(in_array($request->price, $sort)) {
+        //     $posts->setCollection(
+        //         $request->price === 'desc' ? $posts->sortByDesc('price') : $posts->sortBy('price')
+        //     );
+        // }            
     }
 
     /**
