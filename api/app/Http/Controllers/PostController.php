@@ -51,14 +51,10 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Post $post, $id)
+    public function show(Post $post)
     {
-        $post_data = $post->query()->where('id', $id)->first();
+        $post_data = $post->query()->where('id', $post->id)->first();
         
-        if(!isset($post_data)) {
-            abort(404);
-        }
-
         return response()
             ->json($post_data);
     }
