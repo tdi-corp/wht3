@@ -14,10 +14,6 @@ class PostController extends Controller
     {
         $sort = ['asc', 'desc'];
 
-        $price = $request->price ?? 'asc'; // asc || desc
-        $created_at = $request->created_at ?? null; // asc || desc
-
-
         $posts = Post::paginate(10);
 
         $postsCollection = $posts->getCollection();
