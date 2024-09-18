@@ -15,7 +15,10 @@ class PostController extends Controller
         $posts = Post::paginate(10);
 
         return response()
-            ->json($posts);
+            ->json([
+                'data' => $posts,
+                'ok' => true,
+            ]);
     }
 
     /**
@@ -44,7 +47,8 @@ class PostController extends Controller
 
         return response()
             ->json([
-                'id' => $query->id
+                'data' => $query->id,
+                'ok' => true 
             ]);
     }
 
@@ -56,7 +60,10 @@ class PostController extends Controller
         $post_data = $post->query()->where('id', $post->id)->first();
         
         return response()
-            ->json($post_data);
+            ->json([
+                'data' => $post_data,
+                'ok' => true
+            ]);
     }
 
     /**
