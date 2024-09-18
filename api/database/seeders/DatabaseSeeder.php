@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,9 +15,25 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        $posts = [
+            [
+                'name' => 'Рама',
+                'description' => 'Производство',
+                'price' => 800,
+                'url1' => 'https://test.com',                
+            ],
+        ];
+        
+
+        foreach($posts as $post) {
+            DB::table('posts')->insert([
+                'name' => $post['name'],
+                'description' => $post['description'],
+                'price' => $post['price'],
+                'url1' => $post['url1'],
+            ]);
+
+        }
+
     }
 }
