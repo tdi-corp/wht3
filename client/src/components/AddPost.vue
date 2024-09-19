@@ -29,7 +29,6 @@
 </template>
 
 <script setup>
-// import { ref, onMounted, inject, computed } from "vue";
 import { useDialog } from "primevue/usedialog";
 import { ref, computed, inject } from "vue";
 
@@ -39,8 +38,8 @@ import { useVuelidate } from '@vuelidate/core'
 
 
 const dialogRef = inject("dialogRef");
+const dialogEmit = defineEmits(['save']);
 const dialog = useDialog();
-// const products = ref(null);
 const name = ref('')
 const description = ref('')
 const price = ref('')
@@ -93,7 +92,7 @@ const submitForm = () => {
     if(res) {
         PostsService()
         .then(res => {
-            dialogRef.value.close()
+            dialogEmit('save')
             console.log(res?.data);  //id
         })     
     }

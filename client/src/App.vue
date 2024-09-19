@@ -37,15 +37,10 @@ import DynamicDialog from 'primevue/dynamicdialog';
 import { useDialog } from 'primevue/usedialog';
 import { useToast } from 'primevue/usetoast';
 import { ref, onMounted } from 'vue';
+
 const Form = defineAsyncComponent(() => import('./components/Form.vue'));
 const AddPost = defineAsyncComponent(() => import('./components/AddPost.vue'));
-
-
 const dialog = useDialog();
-
-const showProducts = () => {
-
-}
 
 onMounted(() => {
     (indexData.service)();
@@ -55,7 +50,6 @@ const currentPosts = ref();
 const totalPosts = ref();
 
 const pageUpdate = (v) => {
-  // console.log(v);
   (indexData.service)(v)
 }
 
@@ -96,14 +90,21 @@ const storeData = () => {
             modal: true
         },
         onClose: (options) => {
-          (indexData.service)()
+          
+        },
+        emits: {
+            onSave: () => {            
+              (indexData.service)()
+            } 
         }
+
+        
     });  
 }
 
 const showData = (v) => {
 
-  const dialogRef = dialog.open(Form, {
+  dialog.open(Form, {
         props: {
             header: 'Product List',
             style: {
