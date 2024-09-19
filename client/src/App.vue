@@ -1,24 +1,27 @@
 <template>
-  <div class="card">
-      <DataTable 
-        :value="currentPosts"
-        @page="pageUpdate"
-        paginator 
-        :rows="10"
-        :totalRecords="totalPosts"
-        lazy
-        tableStyle="min-width: 50rem"
-      >
-          <Column field="name" header="Name" style="width: 25%"></Column>
-          <Column field="url1" header="Url 1" style="width: 40%"></Column>
-          <Column field="price" header="Price" style="width: 25%"></Column>
-          <Column  header="Watch" style="width: 10%">
-            <template #body="{data}">
-              <Button label="watch" @click="watchItem(data)" />
-            </template>
-          </Column>
-      </DataTable>
+  <div class="relative mx-auto mt-16 grid w-full max-w-container grid-cols-1 px-4 sm:mt-20 sm:px-6 lg:px-8 xl:mt-32">
+    <div class="card">
+        <DataTable 
+          :value="currentPosts"
+          @page="pageUpdate"
+          paginator 
+          :rows="10"
+          :totalRecords="totalPosts"
+          lazy
+          tableStyle="min-width: 50rem"
+        >
+            <Column field="name" header="Name" style="width: 25%"></Column>
+            <Column field="url1" header="Url 1" style="width: 40%"></Column>
+            <Column field="price" header="Price" style="width: 25%"></Column>
+            <Column  header="Watch" style="width: 10%">
+              <template #body="{data}">
+                <Button label="watch" @click="watchItem(data)" />
+              </template>
+            </Column>
+        </DataTable>
+    </div>
   </div>
+
 </template>
 
 <script setup>

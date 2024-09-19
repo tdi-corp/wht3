@@ -1,11 +1,14 @@
 /** @type {import('tailwindcss').Config} */
-const primeui = require('tailwindcss-primeui');
+/* eslint-env node */
+import primeui from 'tailwindcss-primeui'
 
 export default {
-  content: ["./src/**/*.{html,js}"],
+  content: [
+    "./index.html",
+    "./src/**/*.{vue,js,ts,jsx,tsx}",
+  ],
   theme: {
     extend: {},
   },
   plugins: [primeui]
 }
-
