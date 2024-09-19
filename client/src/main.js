@@ -3,7 +3,7 @@ import './assets/main.css'
 import { createApp } from 'vue'
 import App from './App.vue'
 import PrimeVue from 'primevue/config';
-import Lara from '@primevue/themes/lara';
+import Noir from './presets/Noir.js';
 
 import Button from "primevue/button"
 
@@ -11,7 +11,7 @@ import Button from "primevue/button"
 const app = createApp(App)
 app.use(PrimeVue, {
     theme: {
-        preset: Lara
+        preset: Noir
     }
 });
 app.component('Button', Button);

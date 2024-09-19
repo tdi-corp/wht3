@@ -14,7 +14,7 @@
           <Column field="price" header="Price" style="width: 25%"></Column>
           <Column  header="Watch" style="width: 10%">
             <template #body="{data}">
-              <button type="button" @click="watchItem(data)">watch</button>
+              <Button label="watch" @click="watchItem(data)" />
             </template>
           </Column>
       </DataTable>
