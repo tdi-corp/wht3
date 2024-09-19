@@ -55,7 +55,7 @@ import Select from 'primevue/select';
 import { useToast } from 'primevue/usetoast';
 import { ref, onMounted } from 'vue';
 
-const Form = defineAsyncComponent(() => import('./components/Form.vue'));
+const ShowPost = defineAsyncComponent(() => import('./components/ShowPost.vue'));
 const AddPost = defineAsyncComponent(() => import('./components/AddPost.vue'));
 const dialog = useDialog();
 
@@ -130,7 +130,7 @@ const storeData = () => {
 
 const showData = (v) => {
 
-  dialog.open(Form, {
+  dialog.open(ShowPost, {
         props: {
             header: 'Product List',
             style: {
