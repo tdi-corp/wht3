@@ -2,7 +2,7 @@
   <div class="relative mx-auto mt-16 grid w-full max-w-container grid-cols-1 px-4 sm:mt-20 sm:px-6 lg:px-8 xl:mt-32">
     <div class="card">
         <div class="mb-5">
-          <Button label="Add Item" @click=""/>
+          <Button label="Add Post" @click="storeData"/>
         </div>
         <DataTable 
           :value="currentPosts"
@@ -38,6 +38,8 @@ import { useDialog } from 'primevue/usedialog';
 import { useToast } from 'primevue/usetoast';
 import { ref, onMounted } from 'vue';
 const Form = defineAsyncComponent(() => import('./components/Form.vue'));
+const AddPost = defineAsyncComponent(() => import('./components/AddPost.vue'));
+
 
 const dialog = useDialog();
 
@@ -78,6 +80,28 @@ const indexData = {
       })
     }
 
+}
+
+const storeData = () => {
+  dialog.open(AddPost, {
+        props: {
+            header: 'Add Post',
+            style: {
+                width: '30vw',
+            },
+            breakpoints:{
+                '960px': '35vw',
+                '640px': '40vw'
+            },
+            modal: true
+        },
+        templates: {
+            // footer: markRaw(FooterDemo)
+        },
+        onClose: (options) => {
+            // const data = options.data;
+        }
+    });  
 }
 
 const showData = (v) => {
