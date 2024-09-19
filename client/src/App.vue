@@ -70,7 +70,7 @@ const indexData = {
       const filterData = !v ? this.data :
         Object.assign(this.data, {page: v?.page + 1})
 
-      console.log(filterData);
+      // console.log(filterData);
       
 
       PostsService(this.data)
@@ -95,18 +95,15 @@ const storeData = () => {
             },
             modal: true
         },
-        templates: {
-            // footer: markRaw(FooterDemo)
-        },
         onClose: (options) => {
-            // const data = options.data;
+          (indexData.service)()
         }
     });  
 }
 
 const showData = (v) => {
 
-   dialog.open(Form, {
+  const dialogRef = dialog.open(Form, {
         props: {
             header: 'Product List',
             style: {
@@ -124,7 +121,7 @@ const showData = (v) => {
         onClose: (options) => {
             // const data = options.data;
         }
-    });
+  });
 
   console.log(v.id);
   
