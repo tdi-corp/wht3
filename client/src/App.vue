@@ -1,8 +1,24 @@
 <template>
   <div class="relative mx-auto mt-16 grid w-full max-w-container grid-cols-1 px-4 sm:mt-20 sm:px-6 lg:px-8 xl:mt-32">
     <div class="card">
-        <div class="mb-5">
-          <Button label="Add Post" @click="storeData"/>
+        <div class="mb-5 flex justify-between">
+          <div>
+            <div class="flex flex-col gap-2">
+              <label for="storeData">&nbsp;</label>
+              <Button id="storeData" label="Add Post" @click="storeData"/>
+            </div>
+          </div>
+          <div class="flex justify-end gap-2">
+            <div class="flex flex-col gap-2">
+              <label for="createdAt">Дата создания</label>
+              <Select id="createdAt" v-model="createdAt" :options="sortSelect" @change="pageUpdate(null)" optionLabel="title" placeholder="Select a City" class="w-full md:w-56" />
+              
+            </div>            
+            <div class="flex flex-col gap-2">
+              <label for="price">Цена</label>
+              <Select id="price" v-model="price" :options="sortSelect" @change="pageUpdate(null)" optionLabel="title" placeholder="Select a City" class="w-full md:w-56" />
+            </div>            
+          </div>         
         </div>
         <DataTable 
           :value="currentPosts"
@@ -35,6 +51,7 @@ import Row from 'primevue/row';                   // optional
 import { markRaw, defineAsyncComponent } from 'vue';
 import DynamicDialog from 'primevue/dynamicdialog';
 import { useDialog } from 'primevue/usedialog';
+import Select from 'primevue/select';
 import { useToast } from 'primevue/usetoast';
 import { ref, onMounted } from 'vue';
 
@@ -49,7 +66,15 @@ onMounted(() => {
 const currentPosts = ref();
 const totalPosts = ref();
 
-const pageUpdate = (v) => {
+const createdAt = ref(null)
+const price = ref(null);
+const sortSelect = ref([
+  {id: 'asc', title: 'Убывание'},
+  {id: 'desc', title: 'Возрастание'},
+  {id: null, title: 'Пусто'},
+])
+
+const pageUpdate = (v = null) => {
   (indexData.service)(v)
 }
 
@@ -61,13 +86,14 @@ const indexData = {
     },
     service(v = null) {
 
+      this.data.created_at = createdAt.value?.id
+      this.data.price = price.value?.id
+
+
       const filterData = !v ? this.data :
-        Object.assign(this.data, {page: v?.page + 1})
+        Object.assign(this.data, {page: v?.page + 1})      
 
-      // console.log(filterData);
-      
-
-      PostsService(this.data)
+      PostsService(filterData)
       .then((data) => {
         currentPosts.value = data.data.data
         totalPosts.value = data.data.total
@@ -108,16 +134,13 @@ const showData = (v) => {
         props: {
             header: 'Product List',
             style: {
-                width: '50vw',
+                width: '30vw',
             },
             breakpoints:{
-                '960px': '75vw',
-                '640px': '90vw'
+                '960px': '35vw',
+                '640px': '40vw'
             },
             modal: true
-        },
-        templates: {
-            // footer: markRaw(FooterDemo)
         },
         onClose: (options) => {
             // const data = options.data;
