@@ -1,6 +1,9 @@
 <template>
   <div class="relative mx-auto mt-16 grid w-full max-w-container grid-cols-1 px-4 sm:mt-20 sm:px-6 lg:px-8 xl:mt-32">
     <div class="card">
+        <div class="mb-5">
+          <Button label="Add Item" @click=""/>
+        </div>
         <DataTable 
           :value="currentPosts"
           @page="pageUpdate"
@@ -15,13 +18,13 @@
             <Column field="price" header="Price" style="width: 25%"></Column>
             <Column  header="Watch" style="width: 10%">
               <template #body="{data}">
-                <Button label="watch" @click="watchItem(data)" />
+                <Button label="watch" @click="showData(data)" />
               </template>
             </Column>
         </DataTable>
+      </div>
+      <DynamicDialog />
     </div>
-  </div>
-
 </template>
 
 <script setup>
@@ -29,8 +32,18 @@ import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import ColumnGroup from 'primevue/columngroup';   // optional
 import Row from 'primevue/row';                   // optional
-
+import { markRaw, defineAsyncComponent } from 'vue';
+import DynamicDialog from 'primevue/dynamicdialog';
+import { useDialog } from 'primevue/usedialog';
+import { useToast } from 'primevue/usetoast';
 import { ref, onMounted } from 'vue';
+const Form = defineAsyncComponent(() => import('./components/Form.vue'));
+
+const dialog = useDialog();
+
+const showProducts = () => {
+
+}
 
 onMounted(() => {
     (indexData.service)();
@@ -67,9 +80,27 @@ const indexData = {
 
 }
 
-const watchItem = (v) => {
+const showData = (v) => {
 
-  // const { data } = v
+   dialog.open(Form, {
+        props: {
+            header: 'Product List',
+            style: {
+                width: '50vw',
+            },
+            breakpoints:{
+                '960px': '75vw',
+                '640px': '90vw'
+            },
+            modal: true
+        },
+        templates: {
+            // footer: markRaw(FooterDemo)
+        },
+        onClose: (options) => {
+            // const data = options.data;
+        }
+    });
 
   console.log(v.id);
   
