@@ -130,25 +130,44 @@ const storeData = () => {
 
 const showData = (v) => {
 
-  dialog.open(ShowPost, {
-        props: {
-            header: 'Product List',
-            style: {
-                width: '30vw',
-            },
-            breakpoints:{
-                '960px': '35vw',
-                '640px': '40vw'
-            },
-            modal: true
-        },
-        onClose: (options) => {
-            // const data = options.data;
-        }
-  });
+  const id = v.id;
 
-  console.log(v.id);
+  ShowService(id)
+    .then(response => {
+
+      dialog.open(ShowPost, {
+            props: {
+                header: 'Показать пост',
+                style: {
+                    width: '30vw',
+                },
+                breakpoints:{
+                    '960px': '35vw',
+                    '640px': '40vw'
+                },
+                modal: true
+            },
+            data: {
+              data: response,
+    
+            },
+            onClose: (options) => {
+                // const data = options.data;
+            }
+      });
+    })
+    .catch(error => console.log(error));
   
+}
+
+const ShowService = (id, params = null) => {
+  const queryParams = params
+      ? Object.keys(params)
+            .map((k) => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
+            .join('&')
+      : '';
+
+  return fetch(`http://localhost:8000/api/post/${id}?` + queryParams).then((res) => res.json());
 }
 
 const PostsService = (params = null) => {
