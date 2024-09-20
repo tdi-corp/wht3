@@ -17,7 +17,8 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         $posts = [
-            [
+            [   
+                'id' => 1,
                 'name' => 'Рама',
                 'description' => 'Производство',
                 'price' => 800,
