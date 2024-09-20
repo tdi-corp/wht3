@@ -92,14 +92,32 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Post $post)
+    public function show(Post $post, Request $request)
     {
         $post_data = $post->query()->where('id', $post->id)->first();
         
+        if($request->fields == 'description')
+        {
+            $result = $post_data->only('description');
+        }
+        elseif($request->fields == 'url2')
+        {
+            $result = $post_data->only('url2');
+        }
+        elseif($request->fields == 'url3')
+        {
+            $result = $post_data->only('url3');
+        }        
+        else 
+        {
+            $result = $post_data->only('id', 'name', 'price', 'url1');
+
+        }
+        
         return response()
             ->json([
-                'data' => $post_data,
-                'ok' => true
+                'data' => $result,
+                'ok' => true,
             ]);
     }
 
