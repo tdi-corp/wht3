@@ -23,7 +23,7 @@
             {{ error.$message }}
         </p>        
         
-      <Button type="submit" class="p-button p-button-primary" :loading="true">Submit</Button>
+      <Button type="submit" class="p-button p-button-primary">Submit</Button>
     </form>
   </div>
 </template>
