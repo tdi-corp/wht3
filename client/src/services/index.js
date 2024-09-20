@@ -16,7 +16,8 @@ export const Services = {
                   .join('&')
             : '';
       
-        return fetch(`${this.apiUrl}/${id}?` + queryParams).then((res) => res.json());
+        return fetch(`${this.apiUrl}/${id}?` + queryParams)
+                .then((res) => res.json());
     },
     async StoreService(data) {
         const myHeaders = new Headers();
