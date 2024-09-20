@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
@@ -71,10 +72,27 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:200',
+            'description' => 'required|max:1000',
+            'price' => 'required|numeric',
+            'url1' => 'required|url:http,https',
+            'url2' => 'url:http,https',
+            'url3' => 'url:http,https',          
+        ]);
+
+        if($validator->fails()) {
+            return response()->json([
+                'ok' => false,
+                'error' => true,
+                'messages' => $validator->errors()
+            ], 400);
+        }
+
         $query = Post::create([
             'name' => $request->name,
             'description' => $request->description,
-            'price' => $request->price,
+            'price' => floatval($request->price),
             'url1' => $request->url1,
             'url2' => $request->url2,
             'url3' => $request->url3,
