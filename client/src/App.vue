@@ -70,8 +70,8 @@ const totalPosts = ref();
 const createdAt = ref(null)
 const price = ref(null);
 const sortSelect = ref([
-  {id: 'asc', title: 'Убывание'},
-  {id: 'desc', title: 'Возрастание'},
+  {id: 'asc', title: 'Возрастание'},
+  {id: 'desc', title: 'Убывание'},
   {id: null, title: 'Пусто'},
 ])
 
