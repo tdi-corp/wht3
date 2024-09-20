@@ -15,48 +15,21 @@ class PostController extends Controller
     {
         $sort = ['asc', 'desc'];
 
-        $posts = Post::paginate(10);
-
-        $postsCollection = $posts->getCollection();
-
-        $arraySort = [];
-        if(in_array($request->created_at, $sort)) {
-            array_push($arraySort, ['created_at', $request->created_at]);
-        }
-
-        if(in_array($request->price, $sort)) {
-            array_push($arraySort, ['price', $request->price]);
-        }
-
-        if(count($arraySort) > 0) {
-            $postsCollection = $postsCollection->sortBy($arraySort);
-            $postsCollection = $postsCollection->values()->all();     
-        }
-
-        $postsCollection = collect($postsCollection)->map(function ($item, int $key) {
-            return $item->only(['id', 'name', 'url1', 'price']);
-        });
-
-        $posts = $posts->setCollection($postsCollection);
-
+        $posts = Post::when($request->has('created_at') && in_array($request->created_at, $sort), function($query) use ($request) {
+            $query->orderBy('created_at', $request->created_at);
+        })
+        ->when($request->has('price') && in_array($request->price, $sort), function($query) use ($request) {
+            $query->orderBy('price', $request->price);
+        })
+        ->select('id', 'name', 'url1', 'price')
+        ->paginate(10);
 
         return response()
             ->json([
                 'data' => $posts,
                 'ok' => true,
             ]);
-
-        // if(in_array($request->created_at, $sort)) {
-        //     $posts->setCollection(
-        //         $request->created_at === 'desc' ? $posts->sortByDesc('created_at') : $posts->sortBy('created_at')
-        //     );
-        // }
-
-        // if(in_array($request->price, $sort)) {
-        //     $posts->setCollection(
-        //         $request->price === 'desc' ? $posts->sortByDesc('price') : $posts->sortBy('price')
-        //     );
-        // }            
+        
     }
 
     /**
