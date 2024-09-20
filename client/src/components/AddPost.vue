@@ -110,22 +110,4 @@ const submitForm = () => {
 
 };
 
-
-// const StoreService = async () => {
-//     const myHeaders = new Headers();
-//     myHeaders.append("Content-Type", "application/json");
-
-//     return await fetch('http://localhost:8000/api/post', {
-//         method: "POST",
-//         body: JSON.stringify({ 
-//             name: name.value,
-//             description: description.value,
-//             price: price.value,
-//             url1: url1.value, 
-//         }),
-//         headers: myHeaders,
-//     })
-//     .then((res) => res.json());
-// }
-
 </script>
