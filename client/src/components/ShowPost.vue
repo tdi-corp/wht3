@@ -27,8 +27,6 @@
                 <Button label="Запросить Ссылку 3" @click="ShowFields('url3')"/>
             </InputGroup>
         </div> 
-        
-        {{ state }}
     </div>
 </template>
 
@@ -48,7 +46,11 @@ const ShowFields = (params = null) => {
     
     Services.ShowService(state.data.id, {fields: params})
         .then(res => {
-            state.data = Object.assign(state.data, {[params]: 'test'})
+            if(res?.data[params]){
+                state.data = Object.assign(state.data, {[params]: res?.data[params]})
+
+            }
+            
         })
 }
 
