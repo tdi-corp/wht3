@@ -85,16 +85,25 @@ const indexData = {
       created_at: null, // asc, desc
       price: null, // asc, desc      
     },
+    filteredData: {},
+    removeEmpty(obj) {
+      for(let key in obj) {
+        if(obj[key]) {
+          this.filteredData[key] = obj[key]
+        }
+      }        
+    },
     service(v = null) {
 
       this.data.created_at = createdAt.value?.id
       this.data.price = price.value?.id
 
-
-      const filterData = !v ? this.data :
-        Object.assign(this.data, {page: v?.page + 1})      
-
-      Services.PostsService(filterData)
+      const addPageData = !v ? this.data :
+        Object.assign(this.data, {page: v?.page + 1}) 
+        
+      this.removeEmpty(addPageData);
+          
+      Services.PostsService(this.filteredData)
       .then((data) => {
         currentPosts.value = data.data.data
         totalPosts.value = data.data.total
