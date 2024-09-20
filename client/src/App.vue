@@ -11,12 +11,12 @@
           <div class="flex justify-end gap-2">
             <div class="flex flex-col gap-2">
               <label for="createdAt">Дата создания</label>
-              <Select id="createdAt" v-model="createdAt" :options="sortSelect" @change="pageUpdate(null)" optionLabel="title" placeholder="Select a City" class="w-full md:w-56" />
+              <Select id="createdAt" v-model="createdAt" :options="sortSelect" @change="pageUpdate(null)" optionLabel="title" placeholder="Дата создания" class="w-full md:w-56" />
               
             </div>            
             <div class="flex flex-col gap-2">
               <label for="price">Цена</label>
-              <Select id="price" v-model="price" :options="sortSelect" @change="pageUpdate(null)" optionLabel="title" placeholder="Select a City" class="w-full md:w-56" />
+              <Select id="price" v-model="price" :options="sortSelect" @change="pageUpdate(null)" optionLabel="title" placeholder="Цена" class="w-full md:w-56" />
             </div>            
           </div>         
         </div>
