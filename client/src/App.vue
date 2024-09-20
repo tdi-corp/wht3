@@ -54,6 +54,7 @@ import { useDialog } from 'primevue/usedialog';
 import Select from 'primevue/select';
 import { useToast } from 'primevue/usetoast';
 import { ref, onMounted } from 'vue';
+import { Services } from './services';
 
 const ShowPost = defineAsyncComponent(() => import('./components/ShowPost.vue'));
 const AddPost = defineAsyncComponent(() => import('./components/AddPost.vue'));
@@ -93,7 +94,7 @@ const indexData = {
       const filterData = !v ? this.data :
         Object.assign(this.data, {page: v?.page + 1})      
 
-      PostsService(filterData)
+      Services.PostsService(filterData)
       .then((data) => {
         currentPosts.value = data.data.data
         totalPosts.value = data.data.total
@@ -132,7 +133,7 @@ const showData = (v) => {
 
   const id = v.id;
 
-  ShowService(id)
+  Services.ShowService(id)
     .then(response => {
 
       dialog.open(ShowPost, {
@@ -160,23 +161,4 @@ const showData = (v) => {
   
 }
 
-const ShowService = (id, params = null) => {
-  const queryParams = params
-      ? Object.keys(params)
-            .map((k) => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
-            .join('&')
-      : '';
-
-  return fetch(`http://localhost:8000/api/post/${id}?` + queryParams).then((res) => res.json());
-}
-
-const PostsService = (params = null) => {
-  const queryParams = params
-      ? Object.keys(params)
-            .map((k) => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
-            .join('&')
-      : '';
-
-  return fetch('http://localhost:8000/api/post?' + queryParams).then((res) => res.json());
-}
 </script>
